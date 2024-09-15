@@ -16,7 +16,7 @@ module.exports.createCampground = async (req, res, next) => {
     const geoData = await maptilerClient.geocoding.forward(req.body.campground.location);
     const campground = new Campground(req.body.campground);
     campground.geometry = geoData.features[0].geometry;
-    console.log(campground.geometry);
+    // console.log(campground.geometry);
     campground.images = req.files.map(f => ({ url: f.path, filename: f.filename }))
     campground.author = req.user._id;
     await campground.save();
@@ -31,7 +31,7 @@ module.exports.showCampground = async (req, res,) => {
             path: 'author'
         }
     }).populate('author');
-    console.log(campground)
+    // console.log(campground)
     if (!campground) {
         req.flash('error', 'Cannot find that campground!');
         return res.redirect('/campgrounds');
